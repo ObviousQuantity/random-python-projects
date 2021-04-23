@@ -41,7 +41,6 @@ class GuessNumber:
 
 while True:
     min_range = input("Please choose the minium number for your range: ")
-
     try:
         int(min_range)
     except:

@@ -6,10 +6,17 @@ class Enemy:
         self.classtype = classtype
         self.health = health
         self.mana = mana
+        self.guild = False
         Enemy.add_enemy()
     
     def info(self):
         print(f"I am {self.name} the {self.classtype} I have {self.health}HP and {self.mana}MP")
+
+    def in_guild(self):
+        if self.guild == True:
+            print("IS IN GUILD")
+        else:
+            print("NOT IN GUILD")
 
     @classmethod
     def get_total_enemies(cls):
@@ -18,6 +25,23 @@ class Enemy:
     @classmethod
     def add_enemy(cls):
         cls.number_of_enemies += 1
+
+class Guild:
+    def __init__(self,guild_name,max_members):
+        self.guild_name = guild_name
+        self.max_members = max_members
+        self.members = []
+
+    def join_guild(self,name):
+        if len(self.members) < self.max_members:
+            self.members.append(name)
+            name.guild = True
+            print(f"{name.name} has joined the guild!")
+
+    def leave_guild(self,name):
+        self.members.remove(name)
+        name.guild = False
+        print(f"{name.name} has left the guild!")
 
 class Wizard(Enemy):
     number_of_wizards = 0
@@ -57,11 +81,20 @@ class Warrior(Enemy):
     def add_warrior(cls):
         cls.number_of_warriors += 1   
 
-w = Wizard("Pepe","Mage",90,200,50)
-w2 = Wizard("Frosty","Mage",75,300,50)
-w3 = Warrior("Asmongold","Warrior",100,30,0)
-#w2.info()
-#w2.fireblast()
+Wizard1 = Wizard("Pepe","Mage",90,200,50)
+Wizard2= Wizard("Frosty","Mage",75,300,50)
+
+Warrior1 = Warrior("Asmongold","Warrior",100,30,0)
+Warrior2 = Warrior("Dominic","Warrior",100,30,0)
+Warrior3 = Warrior("Billy","Warrior",100,30,0)
+
+Guild = Guild("Savage Inc",3) #Guild Name: Savage Inc | Max Members: 3
+Warrior1.in_guild()
+Guild.join_guild(Warrior1)
+Warrior1.in_guild()
+Guild.leave_guild(Warrior1)
+Warrior1.in_guild()
+
 print("There are "+str(Enemy.get_total_enemies())+" amount of enemies!")
 print(str(Wizard.get_total_wizards())+" of them are wizards!")
 print(str(Warrior.get_total_warriors())+" of them are warriors!")
